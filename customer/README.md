@@ -41,3 +41,10 @@ $ npm run dev
 # production mode
 $ npm start
 ```
+
+## Running tests
+
+```bash
+$ npm run test
+
+```

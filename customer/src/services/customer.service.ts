@@ -5,10 +5,10 @@ import { generateRandomString } from '@/utils/utils';
 import { Customer, AccountFundingResponse } from '@/interfaces/customer.route';
 import customerModel from '@/models/customer.model';
 import { HttpException } from '@/exceptions/httpException';
-import { BILLING_BASE_URL } from '@/config';
+import { BILLING_DNS } from '@/config';
 
 class CustomerService {
-  private customers = customerModel;
+  public customers = customerModel;
 
   public fundAccount = async (body: FundingDetailsDto): Promise<FundingDetailsDto> => {
     try {
@@ -17,7 +17,7 @@ class CustomerService {
       const reference = generateRandomString(24);
 
       const result = await axios.post<AccountFundingResponse>(
-        `${BILLING_BASE_URL}/billing/account-funding`,
+        `http://${BILLING_DNS}:3001/billing/account-funding`,
         { ...body, reference },
         {
           validateStatus: status => {

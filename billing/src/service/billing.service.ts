@@ -26,8 +26,6 @@ class BillingService {
       };
 
       const createTransaction = await this.transactions.create(createTransactionObj);
-      // transaction = await AppDataSource.getRepository(Transaction).save(createTransaction);
-
       createTransactionObj['transactionId'] = createTransaction._id;
 
       this.publisher(JSON.stringify(createTransactionObj));

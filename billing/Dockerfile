@@ -1,9 +1,9 @@
 # Common build stage
 FROM node:16.16.0-alpine3.15 as common-build-stage
 
-COPY . ./billing-service
+COPY . ./app
 
-WORKDIR /billing-service
+WORKDIR /app
 
 RUN npm install
 
