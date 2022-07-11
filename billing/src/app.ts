@@ -10,7 +10,8 @@ import compression from 'compression';
 import Routes from '@/interfaces/route.interface';
 import errorMiddleware from '@/middlewares/error.middleware';
 import notFound from './middlewares/not-found.middleware';
-import { AppDataSource } from './databases';
+import dbConnection from '@/databases';
+import { connect, set } from 'mongoose';
 
 class App {
   public app: express.Application;
@@ -48,9 +49,17 @@ class App {
   }
 
   private connectToDatabase() {
-    if (this.env !== 'test') {
-      AppDataSource.initialize();
+    if (this.env !== 'production') {
+      set('debug', true);
     }
+
+    connect(dbConnection.url, dbConnection.options)
+      .then(() => {
+        console.log('DB Connected');
+      })
+      .catch(error => {
+        console.log(`Database connection failed: ${error}`);
+      });
   }
 
   private initializeRoutes(routes: Routes[]) {

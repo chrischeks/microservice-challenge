@@ -1,7 +1,7 @@
-import { DB_HOST, DB_PORT, DB_DATABASE } from '@config';
+import { DB_HOST, DB_PASSWORD, DB_USERNAME } from '@config';
 
 const dbConnection = {
-  url: `mongodb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}`,
+  url: `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/core-db?authSource=admin&replicaSet=atlas-ubi6k1-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`,
   options: {
     autoIndex: false,
     maxPoolSize: 10,

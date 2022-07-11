@@ -1,11 +1,11 @@
 import { TransactionDetailsDto } from '../dto/billing.dto';
-import { Transaction } from '@/entities/transaction.entity';
-import { TransactionStatusTypes } from '../interfaces/billing.interface';
-import { AppDataSource } from '@/databases';
+import { Transaction, TransactionStatusTypes } from '../interfaces/billing.interface';
 import { HttpException } from '@/exceptions/httpException';
+import transactionModel from '@/models/transaction.entity';
 
 class BillingService {
   private publisher: (msg: string) => void;
+  private transactions = transactionModel;
 
   constructor(publisher: (msg: string) => void) {
     this.publisher = publisher;
@@ -14,7 +14,7 @@ class BillingService {
   public createTransaction = async (body: TransactionDetailsDto): Promise<Transaction> => {
     const { reference, customerId, amount } = body;
     try {
-      let transaction = await AppDataSource.getRepository(Transaction).findOne({ where: { reference, customerId } });
+      let transaction = await this.transactions.findOne({ reference, customerId });
 
       if (transaction) throw new HttpException(400, 'Possibly a duplicate transaction', reference);
 
@@ -25,10 +25,10 @@ class BillingService {
         reference,
       };
 
-      const createTransaction = AppDataSource.getRepository(Transaction).create(createTransactionObj);
-      transaction = await AppDataSource.getRepository(Transaction).save(createTransaction);
+      const createTransaction = await this.transactions.create(createTransactionObj);
+      // transaction = await AppDataSource.getRepository(Transaction).save(createTransaction);
 
-      createTransactionObj['transactionId'] = transaction.id;
+      createTransactionObj['transactionId'] = createTransaction._id;
 
       this.publisher(JSON.stringify(createTransactionObj));
 

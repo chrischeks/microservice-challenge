@@ -3,8 +3,6 @@ import { NextFunction, Request, Response } from 'express';
 
 const errorMiddleware = (error: HttpException, req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(error.message, error.data, error.status);
-
     const status: number = error.status || 500;
     const message: string = error.message || 'Someting went wrong. Please contact support.';
     const data = error.data;

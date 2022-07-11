@@ -1,13 +1,14 @@
-import { AppDataSource } from '@/database';
-import { Transaction } from '@/entities/transaction.entity';
+import transactionModel from '@/models/transaction.model';
 import { HttpException } from '@/exceptions/httpException';
-import { TransactionDetails, TransactionStatusTypes } from '@/interfaces/billing-worker.interface';
+import { Transaction, TransactionDetails, TransactionStatusTypes } from '@/interfaces/billing-worker.interface';
 import { setTimeout } from 'timers/promises';
 
 class BillWorkerService {
+  private transactions = transactionModel;
+
   public updateTransaction = async (body: TransactionDetails): Promise<Transaction> => {
     try {
-      let transaction = await AppDataSource.getRepository(Transaction).findOne({ where: { id: body.transactionId } });
+      let transaction = await this.transactions.findOne<Transaction>({ _id: body.transactionId });
 
       if (!transaction) {
         throw new HttpException(400, `No transaction was not found for this id`, body.transactionId);
@@ -19,9 +20,7 @@ class BillWorkerService {
 
       await this.charge();
 
-      transaction.status = TransactionStatusTypes.Success;
-
-      transaction = await AppDataSource.getRepository(Transaction).save(transaction);
+      await this.transactions.updateOne({ _id: body.transactionId }, { status: TransactionStatusTypes.Success });
 
       return transaction;
     } catch (error) {

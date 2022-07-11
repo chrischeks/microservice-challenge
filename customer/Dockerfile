@@ -1,9 +1,9 @@
 # Common build stage
-FROM node:14.14.0-alpine3.12 as common-build-stage
+FROM node:16.16.0-alpine3.15 as common-build-stage
 
-COPY . ./app
+COPY . ./customer-service
 
-WORKDIR /app
+WORKDIR /customer-service
 
 RUN npm install
 

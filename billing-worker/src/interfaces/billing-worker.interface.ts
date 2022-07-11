@@ -3,9 +3,20 @@ export enum TransactionStatusTypes {
   Success = 'success',
 }
 
-export class TransactionDetails {
+export interface TransactionDetails {
   customerId: string;
   transactionId: string;
   amount: number;
   status: string;
+}
+
+export interface Transaction {
+  _id: string;
+  amount: number;
+  reference: string;
+  customerId: string;
+  status: TransactionStatusTypes;
+  isDeleted: Boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }

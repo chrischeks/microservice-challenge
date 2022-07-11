@@ -13,7 +13,7 @@ class CustomerService {
   public fundAccount = async (body: FundingDetailsDto): Promise<FundingDetailsDto> => {
     try {
       const customer: Customer = await this.customers.findOne({ _id: body.customerId });
-      // if (!customer) throw new HttpException(400, `No customer with the customerId: ${body.customerId} was not found`, body.customerId);
+      if (!customer) throw new HttpException(400, `No customer with the customerId: ${body.customerId} was not found`, body.customerId);
       const reference = generateRandomString(24);
 
       const result = await axios.post<AccountFundingResponse>(

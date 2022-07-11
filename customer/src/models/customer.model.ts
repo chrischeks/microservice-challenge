@@ -20,6 +20,6 @@ const customerSchema: Schema = new Schema(
   { timestamps: true },
 );
 
-const customerModel = model<Customer & Document>('Customer', customerSchema);
+const customerModel = model<Customer & Document>('customers', customerSchema);
 
 export default customerModel;

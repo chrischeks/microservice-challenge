@@ -9,3 +9,14 @@ export class TransactionDetails {
   amount: number;
   status: string;
 }
+
+export interface Transaction {
+  _id: string;
+  amount: number;
+  reference: string;
+  customerId: string;
+  status: TransactionStatusTypes;
+  isDeleted: Boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

@@ -6,10 +6,11 @@ import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import compression from 'compression';
-import { AppDataSource } from '@/database';
 import createMQConsumer from '@/consumers';
 import { QUEUE_NAME } from './config';
 import errorMiddleware from './middlewares/error.middleware';
+import dbConnection from '@/databases';
+import { connect, set } from 'mongoose';
 
 class App {
   public app: express.Application;
@@ -44,9 +45,17 @@ class App {
   }
 
   private connectToDatabase() {
-    if (this.env !== 'test') {
-      AppDataSource.initialize();
+    if (this.env !== 'production') {
+      set('debug', true);
     }
+
+    connect(dbConnection.url, dbConnection.options)
+      .then(() => {
+        console.log('DB Connected');
+      })
+      .catch(error => {
+        console.log(`Database connection failed: ${error}`);
+      });
   }
 
   private initializeErrorHandling() {

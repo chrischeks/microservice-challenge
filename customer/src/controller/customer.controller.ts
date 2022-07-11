@@ -1,4 +1,3 @@
-import { controllerResponseHandler } from '@/utils/utils';
 import { NextFunction, Request, Response } from 'express';
 import { FundingDetailsDto } from '../dtos/customer.dto';
 import CustomerService from '../services/customer.service';
