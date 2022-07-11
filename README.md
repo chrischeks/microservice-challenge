@@ -4,7 +4,7 @@
 
 ### To run this project you need to take the following steps:
 
-- This project consists of three microservices which needs to be started separately
+- This project consists of three microservices which needs to be started separately. Each service has its sperate README.md file.
 
 1. Install NodeJS [NodeJS](https://nodejs.org/en/).
 1. A code editor [VS code] (https://code.visualstudio.com/download)
