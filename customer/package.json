@@ -1,32 +1,18 @@
 {
-  "name": "blusalt",
+  "name": "customer-service",
   "version": "1.0.0",
-  "description": "A NodeJS for bulk transfer",
+  "description": "Customer service",
   "main": "src/server.ts",
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "test": "jest --forceExit --coverage",
     "test:watch": "jest --watch",
-    "build": "rm -rf dist && tsc && npx tsc-alias",
-    "migrate:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate --config src/databases/index.ts -n",
-    "migration:run": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run --config src/databases/index.ts",
-    "migration:revert": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:revert --config src/databases/index.ts",
-    "db:seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js --config src/@universal/databases/index.ts seed"
+    "build": "rm -rf dist && tsc && npx tsc-alias"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chrischeks/assignment.git"
-  },
-  "keywords": [
-    "transfers"
-  ],
+
   "author": "Chekwube Udeogu",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/chrischeks/assignment/issues"
-  },
-  "homepage": "https://github.com/chrischeks/assignment#readme",
   "dependencies": {
     "axios": "^0.27.2",
     "class-transformer": "^0.5.1",
